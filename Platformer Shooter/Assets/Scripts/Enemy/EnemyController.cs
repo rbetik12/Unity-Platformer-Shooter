@@ -12,7 +12,7 @@ public class EnemyController : MonoBehaviour {
 
     private Seeker seeker;
     private Rigidbody2D rb;
-    private Vector2 force;
+    private bool grounded = true;
 
     void Start() {
         seeker = GetComponent<Seeker>();
@@ -28,6 +28,27 @@ public class EnemyController : MonoBehaviour {
     }
 
     void Update() {
+        CheckIsGrounded();
+        PathFinding();
+    }
+
+    private void OnPathComplete(Path path) {
+        if (!path.error) {
+            this.path = path;
+            currentWaypoint = 0;
+        }
+    }
+
+    private void CheckIsGrounded() {
+        RaycastHit2D hit = Physics2D.Raycast((Vector2) transform.position, Vector2.down, 2f);
+        if (hit.collider != null) {
+            if (Mathf.Abs(hit.point.y - transform.position.y) < 1e-3) {
+                grounded = true;
+            }
+        }
+    }
+
+    private void PathFinding() {
         if (path == null) {
             return;
         }
@@ -39,8 +60,8 @@ public class EnemyController : MonoBehaviour {
         }
 
         Vector2 direction = ((Vector2) path.vectorPath[currentWaypoint] - rb.position).normalized;
-        force = direction * speed * Time.deltaTime;
-        rb.AddForce(force);
+
+        CheckMoveDirection(direction);
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
 
@@ -49,10 +70,25 @@ public class EnemyController : MonoBehaviour {
         }
     }
 
-    private void OnPathComplete(Path path) {
-        if (!path.error) {
-            this.path = path;
-            currentWaypoint = 0;
+    private void CheckMoveDirection(Vector2 direction) {
+        Vector2 force = direction * speed * Time.deltaTime;
+        Debug.Log(Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
+        Debug.Log(grounded);
+        if (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg > 40 && grounded) {
+            grounded = false;
+            rb.AddForce(Vector2.up * 100f);
+            Debug.Log("Jumping");
+        } else {
+            rb.AddForce(new Vector2(force.x, 0));
+            Debug.Log("Moving");
+        }
+        // rb.AddForce(force);
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        // Debug.Log("Collided with " + other.gameObject.tag);
+        if (other.gameObject.tag.Equals("Floor")) {
+            grounded = true;
         }
     }
 }
