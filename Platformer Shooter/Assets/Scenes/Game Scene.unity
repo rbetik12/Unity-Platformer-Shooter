@@ -837,6 +837,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7579934946920399366}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6509310426036946001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6509310426036946000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cf66e7d56234b84c9fd2fdbc9354ada, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6509310426036946003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -942,5 +954,6 @@ PrefabInstance:
       propertyPath: shootingPeriod
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -6413118513632660104, guid: 9c38ed99a51025f4ea8937d4883f6db3, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9c38ed99a51025f4ea8937d4883f6db3, type: 3}
