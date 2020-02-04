@@ -11,7 +11,7 @@ public class EnemyShooting : MonoBehaviour {
 
     private void Start() {
         StartCoroutine(Aim());
-        // StartCoroutine(Shoot());
+        StartCoroutine(Shoot());
     }
 
     void Update() {

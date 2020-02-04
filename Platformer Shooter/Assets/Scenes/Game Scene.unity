@@ -827,6 +827,12 @@ PrefabInstance:
       propertyPath: shootingPeriod
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7453981592397353247, guid: 9c38ed99a51025f4ea8937d4883f6db3,
+        type: 3}
+      propertyPath: bulletObj
+      value: 
+      objectReference: {fileID: 1596016066909404794, guid: 922b9c869dd91544bb5975c88fa3a223,
+        type: 3}
     m_RemovedComponents:
     - {fileID: -6413118513632660104, guid: 9c38ed99a51025f4ea8937d4883f6db3, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9c38ed99a51025f4ea8937d4883f6db3, type: 3}
