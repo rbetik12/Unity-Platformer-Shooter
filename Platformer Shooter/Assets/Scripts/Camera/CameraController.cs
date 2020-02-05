@@ -13,6 +13,7 @@ public class CameraController : MonoBehaviour {
 
     
     void Update() {
+        if (player == null) return;
         this.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -10);
         mainCamera.orthographicSize = Mathf.Clamp(Mathf.MoveTowards(mainCamera.orthographicSize, cameraBasicSize + playerRb.velocity.magnitude, cameraScaleSpeed * Time.deltaTime), 10, 13);
     }

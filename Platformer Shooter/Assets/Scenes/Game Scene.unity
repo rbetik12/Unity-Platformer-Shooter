@@ -6445,6 +6445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   restartLabel: {fileID: 303384127}
+  levelLoader: {fileID: 1663298840}
 --- !u!4 &1629761061
 Transform:
   m_ObjectHideFlags: 0
