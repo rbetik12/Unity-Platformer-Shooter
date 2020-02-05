@@ -14,9 +14,7 @@ public class PlayerMovement : MonoBehaviour {
     void Start() {
         rb = GetComponent<Rigidbody2D>();
         gravityScale = rb.gravityScale;
-        Debug.Log(gravityScale);
     }
-
 
     void Update() {
         Move();
@@ -25,11 +23,9 @@ public class PlayerMovement : MonoBehaviour {
     private void Move() {
         if (Input.GetKey(KeyCode.D)) {
             moveRight = true;
-            // Debug.Log("Right pressed");
         }
         if (Input.GetKey(KeyCode.A)) {
             moveLeft = true;
-            // Debug.Log("Left pressed");
         }
         if (Input.GetKeyDown(KeyCode.Space) && jumpsAmount < 2) {
             jump = true;
@@ -41,12 +37,10 @@ public class PlayerMovement : MonoBehaviour {
         if (moveRight) {
             rb.AddForce(Vector3.right * gravityScale * Time.deltaTime * MOVEMENT_SPEED);
             moveRight = false;
-            // Debug.Log("Applied force to the right");
         }
         if (moveLeft) {
             rb.AddForce(Vector3.left * gravityScale * Time.deltaTime * MOVEMENT_SPEED);
             moveLeft = false;
-            // Debug.Log("Applied force to the left");
         }
         if (jump) {
             rb.AddForce(Vector3.up * gravityScale * Time.deltaTime * MOVEMENT_SPEED * 20f);

@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private LevelLoader levelLoader;
     [SerializeField] private Image healthbar;
     [SerializeField] private ParticlesController particlesController;
+    [SerializeField] private GameUIContoller gameUIContoller;
 
     private float hp = 100f;
 
@@ -38,5 +39,6 @@ public class PlayerController : MonoBehaviour {
         Destroy(this.gameObject);
         particlesController.PlayerDeathParticles(transform.position);
         isAlive = false;
+        gameUIContoller.OnPlayerDeath();
     }
 }

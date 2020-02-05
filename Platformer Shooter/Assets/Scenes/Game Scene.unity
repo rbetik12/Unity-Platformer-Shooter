@@ -6445,6 +6445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   restartLabel: {fileID: 303384127}
+  youDiedLabel: {fileID: 604969698}
   levelLoader: {fileID: 1663298840}
 --- !u!4 &1629761061
 Transform:
@@ -6705,6 +6706,10 @@ PrefabInstance:
       propertyPath: particlesController
       value: 
       objectReference: {fileID: 53562771}
+    - target: {fileID: 68922272, guid: c2837c27c85d44943b6a3d0dc4062126, type: 3}
+      propertyPath: gameUIContoller
+      value: 
+      objectReference: {fileID: 1629761060}
     - target: {fileID: 277027224104532554, guid: c2837c27c85d44943b6a3d0dc4062126,
         type: 3}
       propertyPath: m_Name
