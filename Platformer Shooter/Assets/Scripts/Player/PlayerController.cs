@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
-
+using UnityEngine.UI;
 public class PlayerController : MonoBehaviour {
 
-    [SerializeField] private float enemyBulletDamage = 20f;
+    [SerializeField] private float enemyBulletDamage = 100f;
     [SerializeField] private LevelLoader levelLoader;
+    [SerializeField] private Image healthbar;
+    [SerializeField] private ParticlesController particlesController;
 
     private float hp = 100f;
 
@@ -23,8 +25,18 @@ public class PlayerController : MonoBehaviour {
     private void CheckHealth() {
         if (!isAlive) return;
         if (hp <= 0) {
-            levelLoader.LoadLevel1();
-            isAlive = false;
+            OnDeath();
         }
+        ScaleHealthBar();
+    }
+
+    private void ScaleHealthBar() {
+        healthbar.transform.localScale = new Vector3(hp / 100, 1, 1);
+    }
+
+    private void OnDeath() {
+        Destroy(this.gameObject);
+        particlesController.PlayerDeathParticles(transform.position);
+        isAlive = false;
     }
 }

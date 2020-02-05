@@ -316,5 +316,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dd752fb738de854c823b90fbbaefc37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyBulletDamage: 20
+  enemyBulletDamage: 10
   levelLoader: {fileID: 0}
+  healthbar: {fileID: 0}
