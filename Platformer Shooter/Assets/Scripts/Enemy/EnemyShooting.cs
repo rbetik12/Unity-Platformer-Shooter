@@ -7,6 +7,8 @@ public class EnemyShooting : MonoBehaviour {
     [SerializeField] private GameObject firePoint;
     [SerializeField] private GameObject player;
     [SerializeField] private float shootingPeriod;
+    [SerializeField] private bool shootingOn = true;
+
     private Vector3 rotation;
 
     private void Start() {
@@ -27,6 +29,7 @@ public class EnemyShooting : MonoBehaviour {
     }
 
     private IEnumerator Shoot() {
+        if (!shootingOn) yield break;
         while(true) {
             if (player == null) break;
             GameObject bullet = Instantiate(bulletObj, firePoint.transform.position, firePoint.transform.rotation);
