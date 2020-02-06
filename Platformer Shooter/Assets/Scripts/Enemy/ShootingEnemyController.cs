@@ -2,12 +2,12 @@
 
 public class ShootingEnemyController : MonoBehaviour {
 
-    private SpriteRenderer spriteRenderer;
+    [SerializeField] private ParticlesController particlesController;
 
+    private SpriteRenderer spriteRenderer;
     private float hp = 100f;
     private float playerDamage = 50f;
     private bool isAlive = true;
-
     private Color damagedColor;
 
     private void Start() {
@@ -38,8 +38,7 @@ public class ShootingEnemyController : MonoBehaviour {
 
     private void CheckHealth() {
         if (hp <= 0) {
-            isAlive = false;
-            Destroy(this.gameObject);
+            OnDeath();
         }
         if (spriteRenderer.color != damagedColor)
             ChangeColor();
@@ -47,5 +46,11 @@ public class ShootingEnemyController : MonoBehaviour {
 
     private void ChangeColor() {
         spriteRenderer.color = Color.Lerp(spriteRenderer.color, damagedColor, 0.2f);
+    }
+
+    private void OnDeath() {
+        isAlive = false;
+        Destroy(this.gameObject);
+        particlesController.EnemyDeathParticles(transform.position, spriteRenderer.color);
     }
 }
