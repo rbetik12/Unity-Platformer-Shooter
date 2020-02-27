@@ -31,6 +31,14 @@ public class PlayerController : MonoBehaviour {
         ScaleHealthBar();
     }
 
+    private void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.tag.Equals("Floor")) {
+            if (other.contactCount > 0) {
+                particlesController.PlayerCollidePatricles(other.GetContact(0).point);
+            }
+        }
+    }
+
     private void ScaleHealthBar() {
         healthbar.transform.localScale = new Vector3(hp / 100, 1, 1);
     }
