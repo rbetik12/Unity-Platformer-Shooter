@@ -8,10 +8,12 @@ public class Bullet : MonoBehaviour {
         particlesController = GameObject.Find("Particles Controller").GetComponent<ParticlesController>();
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
+    private void OnCollisionEnter2D(Collision2D other) {
+        Debug.Log(other.gameObject.tag);
         if (other.gameObject.tag.Equals("Floor")) {
-            Debug.Log("Trigger");
+            Debug.Log("Bullet collision with floor");
             Destroy(this.gameObject);
+            particlesController.BulletDestroyPatricles(other.GetContact(0).point);
         }
     }
 }

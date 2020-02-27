@@ -4,6 +4,10 @@ public class ShootingEnemyController : MonoBehaviour {
 
     [SerializeField] private ParticlesController particlesController;
 
+    private Rigidbody2D rb;
+
+    Vector3 speed;
+
     private SpriteRenderer spriteRenderer;
     private float hp = 100f;
     private float playerDamage = 50f;
@@ -13,12 +17,18 @@ public class ShootingEnemyController : MonoBehaviour {
     private void Start() {
         spriteRenderer = GetComponent<SpriteRenderer>();
         damagedColor = spriteRenderer.color;
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
+    private void FixedUpdate() {
+        speed = rb.velocity;
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.tag.Equals("Player Bullet")) {
             Destroy(other.gameObject);
             GetDamage();
+            rb.velocity = speed;
         }
     }
 

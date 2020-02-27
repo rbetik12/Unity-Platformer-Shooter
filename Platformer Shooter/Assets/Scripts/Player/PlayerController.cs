@@ -9,18 +9,20 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private GameUIContoller gameUIContoller;
 
     private float hp = 100f;
-
+    private Rigidbody2D rb;
+    private Vector3 speed;
     private bool isAlive = true;
+
+    private void Start() {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void FixedUpdate() {
+        speed = rb.velocity;
+    }
 
     private void Update() {
         CheckHealth();
-    }
-
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.tag.Equals("Enemy Bullet")) {
-            hp -= enemyBulletDamage;
-            Destroy(other.gameObject);
-        }
     }
 
     private void CheckHealth() {
@@ -37,7 +39,15 @@ public class PlayerController : MonoBehaviour {
                 particlesController.PlayerCollidePatricles(other.GetContact(0).point);
             }
         }
+
+        if (other.gameObject.tag.Equals("Enemy Bullet")) {
+            hp -= enemyBulletDamage;
+            Destroy(other.gameObject);
+            rb.velocity = speed;
+        }
     }
+
+    
 
     private void ScaleHealthBar() {
         healthbar.transform.localScale = new Vector3(hp / 100, 1, 1);
