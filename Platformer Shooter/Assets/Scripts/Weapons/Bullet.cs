@@ -9,9 +9,7 @@ public class Bullet : MonoBehaviour {
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
-        Debug.Log(other.gameObject.tag);
-        if (other.gameObject.tag.Equals("Floor")) {
-            Debug.Log("Bullet collision with floor");
+        if (other.gameObject.name.Contains("Tilemap")) {
             Destroy(this.gameObject);
             particlesController.BulletDestroyPatricles(other.GetContact(0).point);
         }
