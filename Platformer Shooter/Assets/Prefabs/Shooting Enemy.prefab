@@ -256,6 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fac1e8fdbae4894880cde545aaef007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particlesController: {fileID: 0}
 --- !u!1 &3703333234994076348
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,3 +306,4 @@ MonoBehaviour:
   firePoint: {fileID: 3703333234170016994}
   player: {fileID: 0}
   shootingPeriod: 1
+  shootingOn: 1

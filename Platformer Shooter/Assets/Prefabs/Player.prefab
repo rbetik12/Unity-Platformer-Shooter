@@ -269,7 +269,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.95, y: 0.95}
   m_EdgeRadius: 0
 --- !u!50 &277027224104532597
 Rigidbody2D:
@@ -287,7 +287,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 790e70fe3ab6b204d812eff41ac9d634, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -319,3 +319,5 @@ MonoBehaviour:
   enemyBulletDamage: 10
   levelLoader: {fileID: 0}
   healthbar: {fileID: 0}
+  particlesController: {fileID: 0}
+  gameUIContoller: {fileID: 0}
