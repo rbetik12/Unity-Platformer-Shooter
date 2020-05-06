@@ -61,10 +61,7 @@ public class PlayerMovement : MonoBehaviour {
     private bool IsFloorColliding() {
         float dist = 0.1f;
         RaycastHit2D raycastHit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.5f), Vector2.down, dist);
-        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down));
         if (raycastHit.collider != null) {
-            Debug.Log(raycastHit.collider.gameObject.transform.position);
-            Debug.Log(raycastHit.collider.gameObject.name);
             return true;
         }
         return false;
