@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+
 public class PlayerController : MonoBehaviour {
 
     [SerializeField] private float enemyBulletDamage = 100f;
@@ -8,6 +10,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private ParticlesController particlesController;
     [SerializeField] private GameUIContoller gameUIContoller;
 
+    private Tilemap tilemap;
     private float hp = 100f;
     private Rigidbody2D rb;
     private Vector3 speed;
@@ -15,6 +18,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
+        tilemap = GameObject.Find("Map").GetComponentInChildren<Tilemap>();
     }
 
     private void FixedUpdate() {
@@ -34,20 +38,18 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.tag.Equals("Floor")) {
+        if (other.gameObject.name.Contains("Tilemap")) {
             if (other.contactCount > 0) {
-                particlesController.PlayerCollidePatricles(other.GetContact(0).point);
+                Debug.Log("col");
+                particlesController.PlayerCollidePatricles(other.GetContact(0).point, new Color(74 / 256f, 74 / 256f, 74 / 256f, 1f));
             }
         }
-
         if (other.gameObject.tag.Equals("Enemy Bullet")) {
             hp -= enemyBulletDamage;
             Destroy(other.gameObject);
             rb.velocity = speed;
         }
     }
-
-    
 
     private void ScaleHealthBar() {
         healthbar.transform.localScale = new Vector3(hp / 100, 1, 1);

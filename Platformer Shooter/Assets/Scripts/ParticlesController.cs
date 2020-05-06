@@ -18,8 +18,11 @@ public class ParticlesController : MonoBehaviour {
         enemyDeathParticles.Play();
     }
 
-    public void PlayerCollidePatricles(Vector3 pos) {
+    public void PlayerCollidePatricles(Vector3 pos, Color color) {
         pos = new Vector3(pos.x, pos.y + 0.2f, pos.z);
+        ParticleSystem.MainModule ma = playerCollisionParticles.main;
+        Debug.Log(color);
+        ma.startColor = new ParticleSystem.MinMaxGradient(color);
         playerCollisionParticles.transform.position = pos;
         playerCollisionParticles.Play();
     }
