@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.tag.Equals("Floor")) {
+        if (other.gameObject.name.Contains("Tilemap")) {
             jumpsAmount = 0;
         }
     }
