@@ -1,14 +1,22 @@
 ﻿using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour {
-
     [SerializeField] private GameObject bulletObj;
     [SerializeField] private GameObject firePoint;
+    
     private Vector3 rotation;
+    private PlaceablesController placeables;
+
+    void Start() {
+        placeables = GameObject.Find("PlaceablesController").GetComponent<PlaceablesController>();
+    }
 
     void Update() {
         Aim();
         Shoot();
+        if (Input.GetKeyDown(KeyCode.F)) {
+            placeables.SpawnBomb(this.transform.position);
+        }
     }
 
     private void Aim() {
