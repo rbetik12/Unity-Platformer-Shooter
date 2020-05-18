@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Tilemaps;
 
 public class PlaceablesController : MonoBehaviour {
     [SerializeField] private GameObject bomb;
     [SerializeField] private int bombExplosionTime;
+    [SerializeField] private Tilemap tilemap;
 
     private Queue<Bomb> bombs;
     private float bombTimer = 1;
@@ -21,7 +23,7 @@ public class PlaceablesController : MonoBehaviour {
         if (bombs.Count == 0) return;
         if (Convert.ToInt32(bombTimer) % bombExplosionTime == 0) {
             Bomb queueBomb = bombs.Dequeue();
-            queueBomb.Destroy();
+            queueBomb.Destroy(tilemap);
         }
     }
 

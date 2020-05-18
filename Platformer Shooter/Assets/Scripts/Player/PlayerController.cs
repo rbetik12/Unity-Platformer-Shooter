@@ -40,7 +40,6 @@ public class PlayerController : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.name.Contains("Tilemap")) {
             if (other.contactCount > 0) {
-                Debug.Log("col");
                 particlesController.PlayerCollidePatricles(other.GetContact(0).point, new Color(74 / 256f, 74 / 256f, 74 / 256f, 1f));
             }
         }
