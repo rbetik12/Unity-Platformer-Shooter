@@ -7,11 +7,13 @@ public class PlaceablesController : MonoBehaviour {
     [SerializeField] private GameObject bomb;
     [SerializeField] private int bombExplosionTime;
     [SerializeField] private Tilemap tilemap;
+    private SupervisorController supervisorController;
 
     private Queue<Bomb> bombs;
     private float bombTimer = 1;
     void Start() {
         bombs = new Queue<Bomb>();
+        supervisorController = GameObject.Find("ObjectsSupervisor").GetComponent<SupervisorController>();
     }
 
     void Update() {
@@ -28,7 +30,7 @@ public class PlaceablesController : MonoBehaviour {
     }
 
     public void SpawnBomb(Vector3 position) {
-        Bomb spawnBomb = new Bomb(bomb, position);
+        Bomb spawnBomb = new Bomb(bomb, position, supervisorController);
         bombs.Enqueue(spawnBomb);
         spawnBomb.Place();
     }

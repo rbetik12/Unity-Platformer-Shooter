@@ -60,4 +60,8 @@ public class PlayerController : MonoBehaviour {
         isAlive = false;
         gameUIContoller.OnPlayerDeath();
     }
+
+    public void GetBombDamage() {
+        hp -= 50f;
+    }
 }
