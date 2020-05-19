@@ -3,6 +3,7 @@ using UnityEngine.Tilemaps;
 
 public class Bomb : AbstractPlaceable {
     private const int BOMB_RADIUS = 2;
+    private BombController bombController;
 
     public Bomb(GameObject gameObject, Vector3 position) {
         placeable = gameObject;
@@ -11,6 +12,7 @@ public class Bomb : AbstractPlaceable {
 
     override public void Place() {
         placeable = Object.Instantiate(placeable, position, Quaternion.Euler(0, 0, 0));
+        bombController = placeable.GetComponent<BombController>();
     }
 
     override public void Destroy(Tilemap tilemap) {
@@ -23,6 +25,8 @@ public class Bomb : AbstractPlaceable {
                 tilemap.SetTile(tilepos, null);
             }
         }
+        if (bombController.IsPlayerWithinRadius())
+            Debug.Log("Player should be damaged");
         Object.Destroy(placeable);
     }
 }
