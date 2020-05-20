@@ -17,9 +17,10 @@ namespace Player {
         private bool moveLeft;
         private bool jump;
         private int jumpsAmount;
+        private bool isFloorColliding;
 
         private const float MovementSpeed = 1000f;
-        private const float MaxVelocity = 5f;
+        private const float MaxVelocity = 4.5f;
         private const float MinVelocity = -MaxVelocity;
 
         private void Start() {
@@ -29,40 +30,48 @@ namespace Player {
 
         private void FixedUpdate() {
             speed = rb.velocity;
-            if (IsFloorColliding() && !moveRight && !moveLeft && !jump) {
+            if (isFloorColliding && !moveRight && !moveLeft && !jump) {
                 rb.velocity = new Vector2(0, 0);
             }
+            else {
+                if (moveRight) {
+                    rb.AddForce(Vector3.right * (gravityScale * Time.deltaTime * MovementSpeed));
+                }
 
-            if (moveRight) {
-                rb.AddForce(Vector3.right * (gravityScale * Time.deltaTime * MovementSpeed));
-                moveRight = false;
-            }
+                if (moveLeft) {
+                    rb.AddForce(Vector3.left * (gravityScale * Time.deltaTime * MovementSpeed));
+                }
 
-            if (moveLeft) {
-                rb.AddForce(Vector3.left * (gravityScale * Time.deltaTime * MovementSpeed));
-                moveLeft = false;
-            }
-
-            if (jump) {
-                rb.AddForce(Vector3.up * (gravityScale * Time.deltaTime * MovementSpeed * 20f));
-                jump = false;
+                if (jump) {
+                    rb.AddForce(Vector3.up * (gravityScale * Time.deltaTime * MovementSpeed * 20f));
+                    jump = false;
+                }
             }
 
             rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, MinVelocity, MaxVelocity), rb.velocity.y);
         }
 
         private void Update() {
-            CheckHealth();
             Move();
+            isFloorColliding = IsFloorColliding();
+            CheckHealth();
         }
 
         private void Move() {
-            if (Input.GetKey(KeyCode.D)) {
+            if (Input.GetKeyDown(KeyCode.D)) {
                 moveRight = true;
             }
 
-            if (Input.GetKey(KeyCode.A)) {
+            if (Input.GetKeyUp(KeyCode.D)) {
+                moveRight = false;
+            }
+
+            if (Input.GetKeyDown(KeyCode.A)) {
                 moveLeft = true;
+            }
+            
+            if (Input.GetKeyUp(KeyCode.A)) {
+                moveLeft = false;
             }
 
             if (Input.GetKeyDown(KeyCode.Space) && jumpsAmount < 2) {
@@ -72,7 +81,7 @@ namespace Player {
         }
 
         private bool IsFloorColliding() {
-            float dist = 0.01f;
+            float dist = 0.1f;
             RaycastHit2D raycastHit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.5f),
                 Vector2.down, dist);
             if (raycastHit.collider != null) {

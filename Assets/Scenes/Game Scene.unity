@@ -20201,21 +20201,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1812993275}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1371685179
-MonoBehaviour:
+--- !u!70 &1371685179
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1371685178}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1853be0ddf47f284dadf63ec389b750b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bomb: {fileID: 0}
-  bombExplosionTime: 0
-  tilemap: {fileID: 0}
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1, y: 1}
+  m_Direction: 0
 --- !u!1 &1500113666
 GameObject:
   m_ObjectHideFlags: 0
@@ -20356,10 +20357,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 68922272, guid: c2837c27c85d44943b6a3d0dc4062126, type: 3}
-      propertyPath: levelLoader
-      value: 
-      objectReference: {fileID: 1663298840}
-    - target: {fileID: 68922272, guid: c2837c27c85d44943b6a3d0dc4062126, type: 3}
       propertyPath: healthbar
       value: 
       objectReference: {fileID: 347353394}
@@ -20371,30 +20368,15 @@ PrefabInstance:
       propertyPath: gameUIContoller
       value: 
       objectReference: {fileID: 1629761060}
-    - target: {fileID: 277027222765430432, guid: c2837c27c85d44943b6a3d0dc4062126,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 277027223488792830, guid: c2837c27c85d44943b6a3d0dc4062126,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 277027224078959115, guid: c2837c27c85d44943b6a3d0dc4062126,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 277027224104532554, guid: c2837c27c85d44943b6a3d0dc4062126,
         type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 277027224104532554, guid: c2837c27c85d44943b6a3d0dc4062126,
+    - target: {fileID: 277027224104532597, guid: c2837c27c85d44943b6a3d0dc4062126,
         type: 3}
-      propertyPath: m_Layer
-      value: 8
+      propertyPath: m_BodyType
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 277027224104532598, guid: c2837c27c85d44943b6a3d0dc4062126,
         type: 3}
@@ -20451,7 +20433,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 277027224104532596, guid: c2837c27c85d44943b6a3d0dc4062126, type: 3}
+    - {fileID: 1371685179, guid: c2837c27c85d44943b6a3d0dc4062126, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c2837c27c85d44943b6a3d0dc4062126, type: 3}
 --- !u!1 &2010827597
 GameObject:
