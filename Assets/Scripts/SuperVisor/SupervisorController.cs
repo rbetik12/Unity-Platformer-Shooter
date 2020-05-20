@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Player;
+using UnityEngine;
 
 public class SupervisorController : MonoBehaviour {
     private GameObject player;
