@@ -59,10 +59,10 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private bool IsFloorColliding() {
-        float dist = 0.1f;
+        float dist = 0.01f;
         RaycastHit2D raycastHit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.5f), Vector2.down, dist);
         if (raycastHit.collider != null) {
-            return true;
+            return !raycastHit.collider.isTrigger;
         }
         return false;
     }

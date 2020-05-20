@@ -20061,7 +20061,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bomb: {fileID: 5821078996450370586, guid: 5f651564d7f54ef449d79b7cdd3ff629, type: 3}
-  bombExplosionTime: 7
+  bombExplosionTime: 1000
   tilemap: {fileID: 927399161}
 --- !u!4 &1035381122
 Transform:
