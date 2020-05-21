@@ -18,10 +18,10 @@ namespace Player {
             if (Input.GetKeyDown(KeyCode.F)) {
                 placeables.SpawnBomb(transform.position);
             }
-        }
+        } 
 
         private void Aim() {
-            rotation = Vector3.Normalize(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
+            rotation = Vector3.Normalize(UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
             transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg);
         }
 
