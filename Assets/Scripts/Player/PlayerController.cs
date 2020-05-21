@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UIControllers;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Player {
@@ -81,17 +82,15 @@ namespace Player {
         }
 
         private bool IsFloorColliding() {
-            float dist = 0.1f;
+            const float dist = 0.1f;
             RaycastHit2D raycastHit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.5f),
                 Vector2.down, dist);
-            if (raycastHit.collider != null) {
-                bool isNotTrigger = !raycastHit.collider.isTrigger;
-                if (isNotTrigger)
-                    jumpsAmount = 0;
-                return isNotTrigger;
-            }
+            if (raycastHit.collider == null) return false;
+            bool isNotTrigger = !raycastHit.collider.isTrigger;
+            if (isNotTrigger)
+                jumpsAmount = 0;
+            return isNotTrigger;
 
-            return false;
         }
 
         private void CheckHealth() {
@@ -104,11 +103,10 @@ namespace Player {
         }
 
         private void OnCollisionEnter2D(Collision2D other) {
-            if (other.gameObject.tag.Equals("Enemy Bullet")) {
-                hp -= enemyBulletDamage;
-                Destroy(other.gameObject);
-                rb.velocity = speed;
-            }
+            if (!other.gameObject.tag.Equals("Enemy Bullet")) return;
+            hp -= enemyBulletDamage;
+            Destroy(other.gameObject);
+            rb.velocity = speed;
         }
 
         private void ScaleHealthBar() {

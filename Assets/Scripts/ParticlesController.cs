@@ -54,7 +54,6 @@ public class ParticlesController : MonoBehaviour {
 
     private Color GetParticlesColor(Tile tile) {
         BlockType type = GetBlockTypeByName(tile);
-        Debug.Log(type);
         switch (type) {
             case BlockType.BOMB:
                 return new Color(1f, 0f, 0f);
