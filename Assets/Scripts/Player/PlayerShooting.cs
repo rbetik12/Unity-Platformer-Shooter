@@ -1,6 +1,6 @@
 ﻿using Placeables;
 using UnityEngine;
-
+using UnityEngine.Assertions;
 namespace Player {
     public class PlayerShooting : MonoBehaviour {
         [SerializeField] private GameObject bulletObj;
@@ -9,11 +9,12 @@ namespace Player {
         private Vector3 rotation;
         private PlaceablesController placeables;
 
-        void Start() {
-            placeables = GameObject.Find("PlaceablesController").GetComponent<PlaceablesController>();
-        } 
+        private void Start() {
+            placeables = GameObject.Find("PlaceablesController").GetComponent<PlaceablesController>(); 
+            Assert.IsTrue(placeables != null);
+        }
 
-        void Update() {
+        private void Update() {  
             Aim();
             Shoot();
             if (Input.GetKeyDown(KeyCode.F)) {

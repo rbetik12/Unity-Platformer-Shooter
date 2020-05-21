@@ -1,3 +1,4 @@
+using Supervisor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
