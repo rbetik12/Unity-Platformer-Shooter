@@ -169,6 +169,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &119957585 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 277027222765430432, guid: c2837c27c85d44943b6a3d0dc4062126,
+    type: 3}
+  m_PrefabInstance: {fileID: 1812993275}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &119957587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119957585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b072303f05467124291c59faa31aa873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletObj: {fileID: 1596016066909404794, guid: 23914f2eea3bd154ca603021b3978fc5,
+    type: 3}
 --- !u!1 &303384125
 GameObject:
   m_ObjectHideFlags: 0
@@ -20147,6 +20167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0102c6f7b5f20f141975184fd99be4a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pistol: {fileID: 2808363789450583640, guid: 566f80a1cdb7ed74e8ebd983589cd96a, type: 3}
 --- !u!4 &1500113668
 Transform:
   m_ObjectHideFlags: 0
@@ -20192,7 +20213,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   restartLabel: {fileID: 303384127}
   youDiedLabel: {fileID: 604969698}
-  levelLoader: {fileID: 1663298840}
 --- !u!4 &1629761061
 Transform:
   m_ObjectHideFlags: 0
@@ -20269,11 +20289,6 @@ PrefabInstance:
       propertyPath: gameUIContoller
       value: 
       objectReference: {fileID: 1629761060}
-    - target: {fileID: 277027222765430434, guid: c2837c27c85d44943b6a3d0dc4062126,
-        type: 3}
-      propertyPath: camera
-      value: 
-      objectReference: {fileID: 519420031}
     - target: {fileID: 277027224104532554, guid: c2837c27c85d44943b6a3d0dc4062126,
         type: 3}
       propertyPath: m_Name

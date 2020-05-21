@@ -1,17 +1,26 @@
 ﻿using Placeables;
+using Supervisor;
 using UnityEngine;
 using UnityEngine.Assertions;
-namespace Player {
-    public class PlayerShooting : MonoBehaviour {
-        [SerializeField] private GameObject bulletObj;
-        [SerializeField] private GameObject firePoint;
+using Weapons;
 
+namespace Player {
+    public class PlayerShootingController : MonoBehaviour {
+        [SerializeField] private GameObject bulletObj;
+
+        private AbstractWeapon weapon;
         private Vector3 rotation;
         private PlaceablesController placeables;
+        private SupervisorController supervisor;
+        
 
         private void Start() {
             placeables = GameObject.Find("PlaceablesController").GetComponent<PlaceablesController>(); 
+            supervisor =  GameObject.Find("ObjectsSupervisor").GetComponent<SupervisorController>();
+            weapon = supervisor.GetWeapon(WeaponType.Pistol);
+            weapon.Create(transform);
             Assert.IsTrue(placeables != null);
+            Assert.IsTrue(supervisor != null);
         }
 
         private void Update() {  
@@ -29,7 +38,7 @@ namespace Player {
 
         private void Shoot() {
             if (Input.GetMouseButtonDown(0)) {
-                GameObject bullet = Instantiate(bulletObj, firePoint.transform.position, firePoint.transform.rotation);
+                GameObject bullet = Instantiate(bulletObj, weapon.GetFirePoint().position, weapon.GetFirePoint().rotation);
                 bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(rotation.x, rotation.y) * 20f;
             }
         }
