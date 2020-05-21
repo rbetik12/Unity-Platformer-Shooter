@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Placeables;
+using UnityEngine;
 
 namespace Player {
     public class PlayerShooting : MonoBehaviour {
