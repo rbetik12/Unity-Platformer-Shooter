@@ -46,6 +46,7 @@ public class ParticlesController : MonoBehaviour {
     }
 
     public void OnBlockDestroyParticles(Vector3 pos, Tile tile) {
+        if (tile == null) return;
         ParticleSystem.MainModule ma = blockDestroyParticles.main;
         ma.startColor = new ParticleSystem.MinMaxGradient(GetParticlesColor(tile));
         blockDestroyParticles.transform.position = pos;
