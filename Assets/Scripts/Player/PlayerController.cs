@@ -123,5 +123,9 @@ namespace Player {
         public void GetBombDamage() {
             hp -= 50f;
         }
+
+        public void OutOfBoundsCollision() {
+            OnDeath();
+        }
     }
 }
