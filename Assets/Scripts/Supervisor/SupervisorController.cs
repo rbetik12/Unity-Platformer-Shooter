@@ -5,6 +5,7 @@ using Weapons;
 namespace Supervisor {
     public class SupervisorController : MonoBehaviour {
         [SerializeField] private GameObject pistol;
+        [SerializeField] private GameObject shotgun;
         
         private PlayerController playerController;
 
@@ -17,9 +18,14 @@ namespace Supervisor {
         }
 
         public AbstractWeapon GetWeapon(WeaponType type) {
-            if (type.Equals(WeaponType.Pistol))
-                return new Pistol(pistol);
-            return null;
+            switch (type) {
+                case WeaponType.Pistol:
+                    return new Pistol(pistol);
+                case WeaponType.Shotgun:
+                    return new Shotgun(shotgun);
+                default:
+                    return null;
+            }
         }
     }
 }

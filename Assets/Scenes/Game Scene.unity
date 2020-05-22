@@ -20168,6 +20168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pistol: {fileID: 2808363789450583640, guid: 566f80a1cdb7ed74e8ebd983589cd96a, type: 3}
+  shotgun: {fileID: 165992421688330694, guid: bdfb1b939977dca43929dc6e723a5862, type: 3}
 --- !u!4 &1500113668
 Transform:
   m_ObjectHideFlags: 0
@@ -20297,12 +20298,12 @@ PrefabInstance:
     - target: {fileID: 277027224104532598, guid: c2837c27c85d44943b6a3d0dc4062126,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.89
+      value: -6.77
       objectReference: {fileID: 0}
     - target: {fileID: 277027224104532598, guid: c2837c27c85d44943b6a3d0dc4062126,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.15
+      value: -0.21
       objectReference: {fileID: 0}
     - target: {fileID: 277027224104532598, guid: c2837c27c85d44943b6a3d0dc4062126,
         type: 3}

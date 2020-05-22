@@ -17,7 +17,7 @@ namespace Player {
         private void Start() {
             placeables = GameObject.Find("PlaceablesController").GetComponent<PlaceablesController>(); 
             supervisor =  GameObject.Find("ObjectsSupervisor").GetComponent<SupervisorController>();
-            weapon = supervisor.GetWeapon(WeaponType.Pistol);
+            weapon = supervisor.GetWeapon(WeaponType.Shotgun);
             weapon.Create(transform);
             Assert.IsTrue(placeables != null);
             Assert.IsTrue(supervisor != null);
@@ -38,8 +38,7 @@ namespace Player {
 
         private void Shoot() {
             if (Input.GetMouseButtonDown(0)) {
-                GameObject bullet = Instantiate(bulletObj, weapon.GetFirePoint().position, weapon.GetFirePoint().rotation);
-                bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(rotation.x, rotation.y) * 20f;
+                weapon.Shoot(bulletObj, rotation);
             }
         }
     }

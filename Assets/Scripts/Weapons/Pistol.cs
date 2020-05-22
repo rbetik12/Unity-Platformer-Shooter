@@ -23,5 +23,10 @@ namespace Weapons {
             firePoint = weapon.transform.GetChild(0).gameObject;
             firePoint.transform.position = firePointOffset;
         }
+
+        public override void Shoot(GameObject bulletObj, Vector3 rotation) {
+            GameObject bullet = Object.Instantiate(bulletObj, firePoint.transform.position, firePoint.transform.rotation);
+            bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(rotation.x, rotation.y) * 20f;
+        }
     }
 }

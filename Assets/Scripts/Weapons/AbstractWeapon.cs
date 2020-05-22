@@ -8,5 +8,6 @@ namespace Weapons {
         public abstract WeaponType GetType();
         public abstract Transform GetFirePoint();
         public abstract void Create(Transform transform);
+        public abstract void Shoot(GameObject bulletObj, Vector3 rotation);
     }
 }
