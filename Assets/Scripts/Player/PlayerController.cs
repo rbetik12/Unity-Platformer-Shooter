@@ -8,6 +8,7 @@ namespace Player {
         [SerializeField] private Image healthbar;
         [SerializeField] private ParticlesController particlesController;
         [SerializeField] private GameUIContoller gameUIContoller;
+        [SerializeField] private Joystick joystick;
 
         private float hp = 100f;
         private Rigidbody2D rb;
@@ -23,6 +24,11 @@ namespace Player {
         private const float MovementSpeed = 1000f;
         private const float MaxVelocity = 4.5f;
         private const float MinVelocity = -MaxVelocity;
+        private const float MobileMovementSpeedMultiplier = 1.5f;
+
+        //GC Optimization
+        private Vector2 horizontalJoystickVelocity = Vector2.zero;
+        private Vector2 clampedVelocity = Vector2.zero;
 
         private void Start() {
             rb = GetComponent<Rigidbody2D>();
@@ -30,9 +36,14 @@ namespace Player {
         }
 
         private void FixedUpdate() {
+            MoveMobile();
+            // MovePC();
+        }
+
+        private void MovePC() {
             speed = rb.velocity;
             if (isFloorColliding && !moveRight && !moveLeft && !jump) {
-                rb.velocity = new Vector2(0, 0);
+                rb.velocity = Vector2.zero;
             }
             else {
                 if (moveRight) {
@@ -49,11 +60,44 @@ namespace Player {
                 }
             }
 
-            rb.velocity = new Vector2(Mathf.Clamp(rb.velocity.x, MinVelocity, MaxVelocity), rb.velocity.y);
+            clampedVelocity.x = Mathf.Clamp(rb.velocity.x, MinVelocity, MaxVelocity);
+            clampedVelocity.y = rb.velocity.y;
+            rb.velocity = clampedVelocity;
+        }
+
+        public void JumpMobile() {
+            if (jumpsAmount < 1) {
+                jumpsAmount += 1;
+                jump = true;
+            }
+        }
+
+        private void MoveMobile() {
+            speed = rb.velocity;
+            if (isFloorColliding && joystick.Horizontal == 0 && !jump) {
+                rb.velocity = Vector2.zero;
+            }
+            else {
+                if (!joystick.Horizontal.Equals(0)) {
+                    horizontalJoystickVelocity.x = joystick.Horizontal;
+                    horizontalJoystickVelocity.y = 0;
+                    rb.AddForce(horizontalJoystickVelocity *
+                                (gravityScale * Time.deltaTime * MovementSpeed * MobileMovementSpeedMultiplier));
+                }
+
+                if (jump) {
+                    rb.AddForce(Vector3.up * (gravityScale * Time.deltaTime * MovementSpeed * 20f));
+                    jump = false;
+                }
+            }
+
+            clampedVelocity.x = Mathf.Clamp(rb.velocity.x, MinVelocity, MaxVelocity);
+            clampedVelocity.y = rb.velocity.y;
+            rb.velocity = clampedVelocity;
         }
 
         private void Update() {
-            Move();
+            // Move();
             isFloorColliding = IsFloorColliding();
             CheckHealth();
         }
@@ -70,12 +114,12 @@ namespace Player {
             if (Input.GetKeyDown(KeyCode.A)) {
                 moveLeft = true;
             }
-            
+
             if (Input.GetKeyUp(KeyCode.A)) {
                 moveLeft = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.Space) && jumpsAmount < 2) {
+            if (Input.GetKeyDown(KeyCode.Space) && jumpsAmount < 1) {
                 jump = true;
                 jumpsAmount++;
             }
@@ -90,7 +134,6 @@ namespace Player {
             if (isNotTrigger)
                 jumpsAmount = 0;
             return isNotTrigger;
-
         }
 
         private void CheckHealth() {

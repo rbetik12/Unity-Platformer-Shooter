@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-namespace Camera {
+namespace CameraScripts {
     public class CameraController : MonoBehaviour {
         [SerializeField] private GameObject player;
-        [SerializeField] private UnityEngine.Camera mainCamera;
+        [SerializeField] private Camera mainCamera;
         [SerializeField] private float cameraBasicSize = 10f;
         [SerializeField] private float cameraScaleSpeed = 2f;
 

@@ -1,44 +1,58 @@
-﻿using Placeables;
+﻿using System.Collections.Generic;
+using Placeables;
 using Supervisor;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
 using Weapons;
 
 namespace Player {
     public class PlayerShootingController : MonoBehaviour {
-        [SerializeField] private GameObject bulletObj;
+        [SerializeField] private GameObject bulletPrefab;
 
         private AbstractWeapon weapon;
         private Vector3 rotation;
         private PlaceablesController placeables;
         private SupervisorController supervisor;
-        
+
 
         private void Start() {
-            placeables = GameObject.Find("PlaceablesController").GetComponent<PlaceablesController>(); 
-            supervisor =  GameObject.Find("ObjectsSupervisor").GetComponent<SupervisorController>();
+            placeables = GameObject.Find("PlaceablesController").GetComponent<PlaceablesController>();
+            supervisor = GameObject.Find("ObjectsSupervisor").GetComponent<SupervisorController>();
             weapon = supervisor.GetWeapon(WeaponType.Shotgun);
             weapon.Create(transform);
             Assert.IsTrue(placeables != null);
             Assert.IsTrue(supervisor != null);
         }
 
-        private void Update() {  
+        private void Update() {
             Aim();
             Shoot();
             if (Input.GetKeyDown(KeyCode.F)) {
                 placeables.SpawnBomb(transform.position);
             }
-        } 
+        }
 
         private void Aim() {
-            rotation = Vector3.Normalize(UnityEngine.Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
-            transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg);
+            if (!IsPointerOverUIObject()) {
+                rotation = Vector3.Normalize(Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
+                transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg);
+            }
+        }
+
+        private bool IsPointerOverUIObject() {
+            PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+            eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+            return results.Count > 0;
         }
 
         private void Shoot() {
-            if (Input.GetMouseButtonDown(0)) {
-                weapon.Shoot(bulletObj, rotation);
+            if (Input.GetKeyDown(KeyCode.Mouse0)) {
+                if (!IsPointerOverUIObject()) {
+                    weapon.Shoot(bulletPrefab, rotation);
+                }
             }
         }
     }
