@@ -1,4 +1,5 @@
-﻿using Player;
+﻿using Placeables;
+using Player;
 using UIControllers;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -12,6 +13,7 @@ namespace Managers {
         [SerializeField] private GameObject remotePlayerPrefab;
         [SerializeField] private GameUIController uiController;
         [SerializeField] private ParticlesController particlesController;
+        [SerializeField] private PlaceablesController placeablesController;
         [SerializeField] private Tilemap tilemap;
 
         private PlayerController playerController;
@@ -24,24 +26,27 @@ namespace Managers {
         public Particles particles;
         public Map map;
         public Weapon weapon;
+        public Placeable placeable;
 
         private void Start() {
             localPlayer = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
             playerController = localPlayer.GetComponent<PlayerController>();
             player = new Player(this);
-            
             ui = new UI(this);
-            
             particles = new Particles(this);
+            weapon = new Weapon(this);
+            placeable = new Placeable(this);
             
             map = new Map(this);
             map.SetTilemap(tilemap);
-            
-            weapon = new Weapon(this);
         }
 
-        public void OnPlayerJump() {
+        public void UIOnPlayerJump() {
             player.OnJumpClicked();
+        }
+
+        public void UIOnSpawnBomb() {
+            placeable.SpawnBomb();
         }
 
         public class Player {
@@ -128,6 +133,22 @@ namespace Managers {
                     default:
                         return null;
                 }
+            }
+        }
+
+        public class Placeable {
+            private GameManager instance;
+
+            public Placeable(GameManager instance) {
+                this.instance = instance;
+            }
+
+            public void SpawnBomb(Vector3 position) {
+                instance.placeablesController.SpawnBomb(position);
+            }
+
+            public void SpawnBomb() {
+                instance.placeablesController.SpawnBomb(instance.localPlayer.transform.position);
             }
         }
     }

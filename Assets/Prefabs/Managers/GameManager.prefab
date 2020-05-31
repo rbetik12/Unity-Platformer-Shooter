@@ -52,4 +52,5 @@ MonoBehaviour:
   remotePlayerPrefab: {fileID: 0}
   uiController: {fileID: 0}
   particlesController: {fileID: 0}
+  placeablesController: {fileID: 0}
   tilemap: {fileID: 0}

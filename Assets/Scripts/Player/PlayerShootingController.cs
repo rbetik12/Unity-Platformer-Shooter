@@ -12,25 +12,19 @@ namespace Player {
 
         private AbstractWeapon weapon;
         private Vector3 rotation;
-        private PlaceablesController placeables;
         private GameManager gameManager;
 
 
         private void Start() {
-            placeables = GameObject.Find("PlaceablesController").GetComponent<PlaceablesController>();
             gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
             weapon = gameManager.weapon.GetWeapon(WeaponType.Shotgun);
             weapon.Create(transform);
-            Assert.IsTrue(placeables != null);
             Assert.IsTrue(gameManager != null);
         }
 
         private void Update() {
             Aim();
             Shoot();
-            if (Input.GetKeyDown(KeyCode.F)) {
-                placeables.SpawnBomb(transform.position);
-            }
         }
 
         private void Aim() {
