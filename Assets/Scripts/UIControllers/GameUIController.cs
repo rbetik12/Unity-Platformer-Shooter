@@ -1,15 +1,20 @@
-﻿using TMPro;
+﻿using Managers;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UIControllers {
-    public class GameUIContoller : MonoBehaviour {
+    public class GameUIController : MonoBehaviour {
         [SerializeField] private TextMeshProUGUI restartLabel;
         [SerializeField] private TextMeshProUGUI youDiedLabel;
-        [SerializeField] private LevelLoader levelLoader;
+        [SerializeField] private Image healthbar;
+
+        private GameManager gameManager;
 
         private void Start() {
             restartLabel.gameObject.SetActive(false);
             youDiedLabel.gameObject.SetActive(false);
+            gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         }
         
         public void OnRestartEnter() {
@@ -22,12 +27,15 @@ namespace UIControllers {
 
         public void OnRestartClick() {
             restartLabel.color = new Color(66 / 256f, 135 / 256f, 245 / 256f, 1f);
-            levelLoader.LoadLevel1();
         }
 
         public void OnPlayerDeath() {
             restartLabel.gameObject.SetActive(true);
             youDiedLabel.gameObject.SetActive(true);
+        }
+        
+        public void ScaleHealthBar() {
+            healthbar.transform.localScale = new Vector3(gameManager.player.GetPlayerController().GetHp() / 100, 1, 1);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Placeables;
-using Supervisor;
+using Managers;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
@@ -13,16 +13,16 @@ namespace Player {
         private AbstractWeapon weapon;
         private Vector3 rotation;
         private PlaceablesController placeables;
-        private SupervisorController supervisor;
+        private GameManager gameManager;
 
 
         private void Start() {
             placeables = GameObject.Find("PlaceablesController").GetComponent<PlaceablesController>();
-            supervisor = GameObject.Find("ObjectsSupervisor").GetComponent<SupervisorController>();
-            weapon = supervisor.GetWeapon(WeaponType.Shotgun);
+            gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            weapon = gameManager.weapon.GetWeapon(WeaponType.Shotgun);
             weapon.Create(transform);
             Assert.IsTrue(placeables != null);
-            Assert.IsTrue(supervisor != null);
+            Assert.IsTrue(gameManager != null);
         }
 
         private void Update() {

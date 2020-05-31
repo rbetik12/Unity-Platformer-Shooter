@@ -1,22 +1,21 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Supervisor;
-using UnityEngine.Tilemaps;
+using Managers;
 
 namespace Placeables {
     public class PlaceablesController : MonoBehaviour {
-        [SerializeField] private GameObject bomb;
-        [SerializeField] private int bombExplosionTime;
-        [SerializeField] private Tilemap tilemap;
-        private SupervisorController supervisorController;
-
+        [SerializeField] private GameObject bombPrefab;
+        
+        private GameManager gameManager;
         private Queue<Bomb> bombs;
         private float bombTimer = 1;
+        
+        private const int bombExplosionTime = 5;
 
         private void Start() {
             bombs = new Queue<Bomb>();
-            supervisorController = GameObject.Find("ObjectsSupervisor").GetComponent<SupervisorController>();
+            gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         }
 
         private void Update() {
@@ -28,11 +27,11 @@ namespace Placeables {
             if (bombs.Count == 0) return;
             if (Convert.ToInt32(bombTimer) % bombExplosionTime != 0) return;
             Bomb queueBomb = bombs.Dequeue();
-            queueBomb.Destroy(tilemap);
+            queueBomb.Destroy(gameManager.map.GetTileMap());
         }
 
         public void SpawnBomb(Vector3 position) {
-            Bomb spawnBomb = new Bomb(bomb, position, supervisorController);
+            Bomb spawnBomb = new Bomb(bombPrefab, position, gameManager);
             bombs.Enqueue(spawnBomb);
             spawnBomb.Place();
         }

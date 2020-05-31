@@ -1,11 +1,11 @@
-﻿using Supervisor;
+﻿using Managers;
 using UnityEngine;
 
 namespace Utils {
     public class OutOfBoundsController : MonoBehaviour {
-        private SupervisorController supervisorController;
+        private GameManager gameManager;
         private void Start() {
-            supervisorController = GameObject.Find("ObjectsSupervisor").GetComponent<SupervisorController>();
+            gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         }
 
         private void OnTriggerEnter2D(Collider2D other) {
@@ -13,7 +13,7 @@ namespace Utils {
                 Destroy(other.gameObject);
             }
             else if (other.gameObject.name.Contains("Player")) {
-                supervisorController.GetPlayerController().OutOfBoundsCollision();
+                gameManager.player.GetPlayerController().OutOfBoundsCollision();
             }
         }
     }

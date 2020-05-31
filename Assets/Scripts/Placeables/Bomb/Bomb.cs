@@ -1,4 +1,4 @@
-using Supervisor;
+using Managers;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -6,12 +6,12 @@ namespace Placeables {
     public class Bomb : AbstractPlaceable {
         private const int BombRadius = 2;
         private BombController bombController;
-        private readonly SupervisorController supervisorController;
+        private readonly GameManager gameManager;
 
-        public Bomb(GameObject gameObject, Vector3 position, SupervisorController supervisorController) {
+        public Bomb(GameObject gameObject, Vector3 position, GameManager gameManager) {
             placeable = gameObject;
             this.position = position;
-            this.supervisorController = supervisorController;
+            this.gameManager = gameManager;
         }
 
         public override void Place() {
@@ -30,8 +30,10 @@ namespace Placeables {
                 }
             }
 
-            if (bombController.IsPlayerWithinRadius())
-                supervisorController.GetPlayerController().GetBombDamage();
+            if (bombController.IsPlayerWithinRadius()) {
+                gameManager.player.GetPlayerController().GetBombDamage();
+            }
+
             Object.Destroy(placeable);
         }
     }

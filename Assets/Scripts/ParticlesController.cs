@@ -51,6 +51,8 @@ public class ParticlesController : MonoBehaviour {
         ma.startColor = new ParticleSystem.MinMaxGradient(GetParticlesColor(tile));
         blockDestroyParticles.transform.position = pos;
         blockDestroyParticles.Play();
+        Debug.Log(GetParticlesColor(tile));
+        Debug.Log(pos);
     }
 
     private Color GetParticlesColor(Tile tile) {

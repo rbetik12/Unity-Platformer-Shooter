@@ -1,15 +1,9 @@
-﻿using UIControllers;
+﻿using Managers;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Player {
-    public class PlayerController : MonoBehaviour {
-        [SerializeField] private float enemyBulletDamage = 100f;
-        [SerializeField] private Image healthbar;
-        [SerializeField] private ParticlesController particlesController;
-        [SerializeField] private GameUIContoller gameUIContoller;
-        [SerializeField] private Joystick joystick;
-
+    public class PlayerController : MonoBehaviour { 
+        private Joystick joystick;
         private float hp = 100f;
         private Rigidbody2D rb;
         private Vector3 speed;
@@ -20,6 +14,7 @@ namespace Player {
         private bool jump;
         private int jumpsAmount;
         private bool isFloorColliding;
+        private GameManager gameManager;
 
         private const float MovementSpeed = 1000f;
         private const float MaxVelocity = 4.5f;
@@ -33,47 +28,24 @@ namespace Player {
         private void Start() {
             rb = GetComponent<Rigidbody2D>();
             gravityScale = rb.gravityScale;
+            gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            joystick = GameObject.Find("Fixed Joystick").GetComponent<Joystick>();
         }
 
         private void FixedUpdate() {
-            MoveMobile();
-            // MovePC();
+            Move();
         }
 
-        private void MovePC() {
-            speed = rb.velocity;
-            if (isFloorColliding && !moveRight && !moveLeft && !jump) {
-                rb.velocity = Vector2.zero;
-            }
-            else {
-                if (moveRight) {
-                    rb.AddForce(Vector3.right * (gravityScale * Time.deltaTime * MovementSpeed));
-                }
-
-                if (moveLeft) {
-                    rb.AddForce(Vector3.left * (gravityScale * Time.deltaTime * MovementSpeed));
-                }
-
-                if (jump) {
-                    rb.AddForce(Vector3.up * (gravityScale * Time.deltaTime * MovementSpeed * 20f));
-                    jump = false;
-                }
-            }
-
-            clampedVelocity.x = Mathf.Clamp(rb.velocity.x, MinVelocity, MaxVelocity);
-            clampedVelocity.y = rb.velocity.y;
-            rb.velocity = clampedVelocity;
-        }
-
-        public void JumpMobile() {
+        public void Jump() {
             if (jumpsAmount < 1) {
                 jumpsAmount += 1;
                 jump = true;
             }
         }
 
-        private void MoveMobile() {
+        private void Move() {
             speed = rb.velocity;
+            // Debug.Log("Is colliding floor: " + isFloorColliding);
             if (isFloorColliding && joystick.Horizontal == 0 && !jump) {
                 rb.velocity = Vector2.zero;
             }
@@ -86,6 +58,7 @@ namespace Player {
                 }
 
                 if (jump) {
+                    Debug.Log("here");
                     rb.AddForce(Vector3.up * (gravityScale * Time.deltaTime * MovementSpeed * 20f));
                     jump = false;
                 }
@@ -97,32 +70,8 @@ namespace Player {
         }
 
         private void Update() {
-            // Move();
             isFloorColliding = IsFloorColliding();
             CheckHealth();
-        }
-
-        private void Move() {
-            if (Input.GetKeyDown(KeyCode.D)) {
-                moveRight = true;
-            }
-
-            if (Input.GetKeyUp(KeyCode.D)) {
-                moveRight = false;
-            }
-
-            if (Input.GetKeyDown(KeyCode.A)) {
-                moveLeft = true;
-            }
-
-            if (Input.GetKeyUp(KeyCode.A)) {
-                moveLeft = false;
-            }
-
-            if (Input.GetKeyDown(KeyCode.Space) && jumpsAmount < 1) {
-                jump = true;
-                jumpsAmount++;
-            }
         }
 
         private bool IsFloorColliding() {
@@ -141,34 +90,37 @@ namespace Player {
             if (hp <= 0) {
                 OnDeath();
             }
-
-            ScaleHealthBar();
         }
 
         private void OnCollisionEnter2D(Collision2D other) {
-            if (!other.gameObject.tag.Equals("Enemy Bullet")) return;
-            hp -= enemyBulletDamage;
+            if (!other.gameObject.tag.Equals("Bullet")) return;
+            OnDamage(GameManager.bulletDamage);
             Destroy(other.gameObject);
             rb.velocity = speed;
         }
 
-        private void ScaleHealthBar() {
-            healthbar.transform.localScale = new Vector3(hp / 100, 1, 1);
-        }
-
         private void OnDeath() {
             Destroy(gameObject);
-            particlesController.PlayerDeathParticles(transform.position);
+            gameManager.particles.OnPlayerDeath(transform.position);
             isAlive = false;
-            gameUIContoller.OnPlayerDeath();
+            gameManager.ui.OnPlayerDeath();
         }
 
         public void GetBombDamage() {
-            hp -= 50f;
+            OnDamage(50);
         }
 
         public void OutOfBoundsCollision() {
             OnDeath();
+        }
+
+        public float GetHp() {
+            return hp;
+        }
+
+        private void OnDamage(float damage) {
+            hp -= damage;
+            gameManager.player.OnDamage();
         }
     }
 }
