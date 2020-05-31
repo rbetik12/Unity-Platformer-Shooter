@@ -43,13 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a658ae0aacf1c643a841e4a378b860e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDeathParticles: {fileID: 5261338829119575813, guid: 0468209680ccdbc469eaeba4f8dfd1d7,
+  playerDeathParticlesPrefab: {fileID: 5261338829119575864, guid: 0468209680ccdbc469eaeba4f8dfd1d7,
     type: 3}
-  enemyDeathParticles: {fileID: 3909006357064253518, guid: 5fa0cd085641fe543a89e9c91879b15d,
+  enemyDeathParticlesPrefab: {fileID: 3909006357064253553, guid: 5fa0cd085641fe543a89e9c91879b15d,
     type: 3}
-  playerCollisionParticles: {fileID: 7938597855239211253, guid: 92d2e0ea8571ccb498917722692cc472,
+  playerCollisionParticlesPrefab: {fileID: 7938597855239211250, guid: 92d2e0ea8571ccb498917722692cc472,
     type: 3}
-  bulletDestroyPatricles: {fileID: 531021037796223605, guid: 1adf7aa2906259f47a7561e70e802b58,
+  bulletDestroyPatriclesPrefab: {fileID: 531021037796223606, guid: 1adf7aa2906259f47a7561e70e802b58,
     type: 3}
-  blockDestroyParticles: {fileID: 7695639383187189757, guid: af85169380e5a6649b1c7281d71afb2d,
+  blockDestroyParticlesPrefab: {fileID: 7695639383187189696, guid: af85169380e5a6649b1c7281d71afb2d,
     type: 3}

@@ -537,11 +537,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1163743342}
-    - target: {fileID: 1744861223801290174, guid: 30286fabff1d24141be450d07529a9cb,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnPlayerJump
-      objectReference: {fileID: 0}
     - target: {fileID: 1744861224348385707, guid: 30286fabff1d24141be450d07529a9cb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -666,17 +661,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlaceablesController
       objectReference: {fileID: 0}
-    - target: {fileID: 7395282236806305645, guid: 118673c8c50a6464ba648e541566ebac,
-        type: 3}
-      propertyPath: tilemap
-      value: 
-      objectReference: {fileID: 927399161}
-    - target: {fileID: 7395282236806305645, guid: 118673c8c50a6464ba648e541566ebac,
-        type: 3}
-      propertyPath: bombPrefab
-      value: 
-      objectReference: {fileID: 5821078996450370586, guid: 5f651564d7f54ef449d79b7cdd3ff629,
-        type: 3}
     - target: {fileID: 7395282236806305646, guid: 118673c8c50a6464ba648e541566ebac,
         type: 3}
       propertyPath: m_LocalPosition.x

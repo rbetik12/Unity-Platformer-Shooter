@@ -559,8 +559,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 68922272, guid: c2837c27c85d44943b6a3d0dc4062126, type: 3}
-        m_MethodName: Jump
+      - m_Target: {fileID: 0}
+        m_MethodName: OnPlayerJump
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -8,11 +8,30 @@ public class ParticlesController : MonoBehaviour {
         BOMB
     }
 
-    [SerializeField] private ParticleSystem playerDeathParticles;
-    [SerializeField] private ParticleSystem enemyDeathParticles;
-    [SerializeField] private ParticleSystem playerCollisionParticles;
-    [SerializeField] private ParticleSystem bulletDestroyPatricles;
-    [SerializeField] private ParticleSystem blockDestroyParticles;
+    [SerializeField] private GameObject playerDeathParticlesPrefab;
+    [SerializeField] private GameObject enemyDeathParticlesPrefab;
+    [SerializeField] private GameObject playerCollisionParticlesPrefab;
+    [SerializeField] private GameObject bulletDestroyPatriclesPrefab;
+    [SerializeField] private GameObject blockDestroyParticlesPrefab;
+
+    private ParticleSystem playerDeathParticles;
+    private ParticleSystem enemyDeathParticles;
+    private ParticleSystem playerCollisionParticles;
+    private ParticleSystem bulletDestroyParticles;
+    private ParticleSystem blockDestroyParticles;
+
+    private void Start() {
+        playerDeathParticles = Instantiate(playerDeathParticlesPrefab, Vector3.zero, Quaternion.identity)
+            .GetComponent<ParticleSystem>();
+        enemyDeathParticles = Instantiate(enemyDeathParticlesPrefab, Vector3.zero, Quaternion.identity)
+            .GetComponent<ParticleSystem>();
+        playerCollisionParticles = Instantiate(playerCollisionParticlesPrefab, Vector3.zero, Quaternion.identity)
+            .GetComponent<ParticleSystem>();
+        bulletDestroyParticles = Instantiate(bulletDestroyPatriclesPrefab, Vector3.zero, Quaternion.identity)
+            .GetComponent<ParticleSystem>();
+        blockDestroyParticles = Instantiate(blockDestroyParticlesPrefab, Vector3.zero, Quaternion.identity)
+            .GetComponent<ParticleSystem>();
+    }
 
     public void PlayerDeathParticles(Vector3 deathPosition) {
         playerDeathParticles.transform.position = deathPosition;
@@ -34,8 +53,8 @@ public class ParticlesController : MonoBehaviour {
         playerCollisionParticles.Play();
     }
     public void BulletDestroyPatricles(Vector3 pos) {
-        bulletDestroyPatricles.transform.position = pos;
-        bulletDestroyPatricles.Play();
+        bulletDestroyParticles.transform.position = pos;
+        bulletDestroyParticles.Play();
     }
 
     public void OnBlockDestroyParticles(Vector3 pos, Color color) {
@@ -51,8 +70,6 @@ public class ParticlesController : MonoBehaviour {
         ma.startColor = new ParticleSystem.MinMaxGradient(GetParticlesColor(tile));
         blockDestroyParticles.transform.position = pos;
         blockDestroyParticles.Play();
-        Debug.Log(GetParticlesColor(tile));
-        Debug.Log(pos);
     }
 
     private Color GetParticlesColor(Tile tile) {
