@@ -1,4 +1,6 @@
-﻿using Placeables;
+﻿using System.Collections.Generic;
+using Net;
+using Placeables;
 using Player;
 using UIControllers;
 using UnityEngine;
@@ -15,6 +17,8 @@ namespace Managers {
         [SerializeField] private ParticlesController particlesController;
         [SerializeField] private PlaceablesController placeablesController;
         [SerializeField] private Tilemap tilemap;
+        [SerializeField] private NetworkManager networkManager;
+        [SerializeField] private UIManager uiManager;
 
         private PlayerController playerController;
         private GameObject localPlayer;
@@ -27,16 +31,16 @@ namespace Managers {
         public Map map;
         public Weapon weapon;
         public Placeable placeable;
+        public Network network;
 
         private void Start() {
-            localPlayer = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
-            playerController = localPlayer.GetComponent<PlayerController>();
             player = new Player(this);
             ui = new UI(this);
             particles = new Particles(this);
             weapon = new Weapon(this);
             placeable = new Placeable(this);
-            
+            network = new Network(this);
+
             map = new Map(this);
             map.SetTilemap(tilemap);
         }
@@ -49,12 +53,17 @@ namespace Managers {
             placeable.SpawnBomb();
         }
 
+        public void UIConnectToServer() {
+            ui.GetNetUIManager().ConnectToServer();
+        }
+
         public class Player {
             private GameManager instance;
-            
+
             public Player(GameManager instance) {
                 this.instance = instance;
             }
+
             public void OnDamage() {
                 instance.ui.OnPlayerDamage();
             }
@@ -74,13 +83,21 @@ namespace Managers {
             public UI(GameManager instance) {
                 this.instance = instance;
             }
-            
+
             public void OnPlayerDeath() {
                 instance.uiController.OnPlayerDeath();
             }
 
             public void OnPlayerDamage() {
                 instance.uiController.ScaleHealthBar();
+            }
+
+            public UIManager GetNetUIManager() {
+                return instance.uiManager;
+            }
+
+            public GameUIController getGameUIController() {
+                return instance.uiController;
             }
         }
 
@@ -90,7 +107,7 @@ namespace Managers {
             public Particles(GameManager instance) {
                 this.instance = instance;
             }
-            
+
             public void OnPlayerDeath(Vector3 deathPosition) {
                 instance.particlesController.PlayerDeathParticles(deathPosition);
             }
@@ -149,6 +166,41 @@ namespace Managers {
 
             public void SpawnBomb() {
                 instance.placeablesController.SpawnBomb(instance.localPlayer.transform.position);
+            }
+        }
+
+        public class Network {
+            private GameManager instance;
+            private Dictionary<int, PlayerNetworkManager> players = new Dictionary<int, PlayerNetworkManager>();
+
+            public Network(GameManager instance) {
+                this.instance = instance;
+            }
+
+            public Dictionary<int, PlayerNetworkManager> GetPlayers() {
+                return players;
+            }
+
+            public void SpawnPlayer(int id, string username, Vector3 position, Quaternion rotation) {
+                GameObject player;
+                if (id == instance.networkManager.GetClient().myId) {
+                    player = Instantiate(instance.playerPrefab, position, rotation);
+                    instance.playerController = player.GetComponent<PlayerController>();
+                }
+                else {
+                    // player = Insta
+                    player = null;
+                }
+                // localPlayer = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
+                // playerController = localPlayer.GetComponent<PlayerController>();
+
+                PlayerNetworkManager pnm = player.GetComponent<PlayerNetworkManager>();
+                pnm.Initialize(id, username);
+                players.Add(id, pnm);
+            }
+
+            public NetworkManager GetNetworkManager() {
+                return instance.networkManager;
             }
         }
     }
