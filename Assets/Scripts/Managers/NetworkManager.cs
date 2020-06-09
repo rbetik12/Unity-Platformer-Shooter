@@ -33,6 +33,10 @@ namespace Managers {
             return clientHandlerInstance;
         }
 
+        public ClientSend GetClientSend() {
+            return clientSendInstance;
+        }
+
         public Client GetClient() {
             return clientInstance;
         }
@@ -118,14 +122,13 @@ namespace Managers {
                 }
             }
 
-            public void PlayerMovement(bool[] inputs) {
+            public void PlayerMovement(float[] input) {
                 using (Packet packet = new Packet((int) ClientPackets.playerMovement)) {
-                    packet.Write(inputs.Length);
-                    foreach (bool input in inputs) {
-                        packet.Write(input);
-                    }
-
-                    packet.Write(instance.gameManagerInstance.network.GetPlayers()[instance.clientInstance.myId].transform.rotation);
+                    packet.Write(input[0]);
+                    packet.Write(input[1]);
+                    packet.Write(input[2]);
+                    packet.Write(instance.gameManagerInstance.network.GetPlayers()[instance.clientInstance.myId]
+                        .transform.rotation);
 
                     SendUDPData(packet);
                 }

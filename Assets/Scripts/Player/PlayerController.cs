@@ -15,6 +15,7 @@ namespace Player {
         private int jumpsAmount;
         private bool isFloorColliding;
         private GameManager gameManager;
+        private NetworkManager networkManager;
 
         private const float MovementSpeed = 1000f;
         private const float MaxVelocity = 4.5f;
@@ -29,6 +30,7 @@ namespace Player {
             rb = GetComponent<Rigidbody2D>();
             gravityScale = rb.gravityScale;
             gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
             joystick = GameObject.Find("Fixed Joystick").GetComponent<Joystick>();
         }
 
@@ -46,27 +48,35 @@ namespace Player {
         private void Move() {
             speed = rb.velocity;
             // Debug.Log("Is colliding floor: " + isFloorColliding);
-            if (isFloorColliding && joystick.Horizontal == 0 && !jump) {
-                rb.velocity = Vector2.zero;
+            float[] inputNet = new float[3];
+            if (isFloorColliding && joystick.Horizontal.Equals(0) && !jump) {
+                // rb.velocity = Vector2.zero;
+                // movementForceNet = Vector2.down;
+                inputNet[0] = 0;
             }
             else {
+                inputNet[0] = 1;
                 if (!joystick.Horizontal.Equals(0)) {
                     horizontalJoystickVelocity.x = joystick.Horizontal;
                     horizontalJoystickVelocity.y = 0;
-                    rb.AddForce(horizontalJoystickVelocity *
-                                (gravityScale * Time.deltaTime * MovementSpeed * MobileMovementSpeedMultiplier));
+                    // rb.AddForce(horizontalJoystickVelocity * (gravityScale * Time.deltaTime * MovementSpeed * MobileMovementSpeedMultiplier));
+                    inputNet[1] = joystick.Horizontal;
                 }
 
                 if (jump) {
-                    Debug.Log("here");
-                    rb.AddForce(Vector3.up * (gravityScale * Time.deltaTime * MovementSpeed * 20f));
+                    // rb.AddForce(Vector3.up * (gravityScale * Time.deltaTime * MovementSpeed * 20f));
+                    inputNet[2] = 1;
                     jump = false;
+                }
+                else {
+                    inputNet[2] = 0;
                 }
             }
 
-            clampedVelocity.x = Mathf.Clamp(rb.velocity.x, MinVelocity, MaxVelocity);
-            clampedVelocity.y = rb.velocity.y;
-            rb.velocity = clampedVelocity;
+            networkManager.GetClientSend().PlayerMovement(inputNet);
+            // clampedVelocity.x = Mathf.Clamp(rb.velocity.x, MinVelocity, MaxVelocity);
+            // clampedVelocity.y = rb.velocity.y;
+            // rb.velocity = clampedVelocity;
         }
 
         private void Update() {
