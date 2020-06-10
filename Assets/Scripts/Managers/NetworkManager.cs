@@ -126,7 +126,6 @@ namespace Managers {
                 using (Packet packet = new Packet((int) ClientPackets.playerMovement)) {
                     packet.Write(input[0]);
                     packet.Write(input[1]);
-                    packet.Write(input[2]);
                     packet.Write(instance.gameManagerInstance.network.GetPlayers()[instance.clientInstance.myId]
                         .transform.rotation);
 
